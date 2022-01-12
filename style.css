@@ -3,11 +3,26 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+#canvas{
+    border: 2px solid black;
+    weight: 1280px;
+    height: 720px;
+    display: inline-grid;
+    gap: 3px;
+    padding: 3px;
+
+    image-rendering: optimizeSpeed;
+
+    image-rendering: pixelated;
+
+}
+
 html, body{
     height: 100%;
 }
 body{
-    background-color: blueviolet;
+    background-color: #a1a1a1;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -28,7 +43,8 @@ body{
 }
 .btn, input{
     height: 35px;
-    padding: 0 1em;
+    padding: 0 2em;
+    margin: 0 1em;
 }
 .color{
     padding: 0 .25em;
