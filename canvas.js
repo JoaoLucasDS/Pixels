@@ -78,6 +78,66 @@ window.addEventListener('load',() => {
       }
    }
 
+   function drawPixel(x,y){
+      ctx.fillStyle = color.value;
+      ctx.fillRect(Math.round(x), Math.round(y), 1, 1)
+      return;
+   }
+
+   function deletePixel(x,y){
+      ctx.clearRect(Math.round(x), Math.round(y), 1, 1)
+      return;
+   }
+
+   function drawCircle(e){
+      if (count == 0){
+         firstPoint = getMousePos(canvas, e);
+         drawPixel(firstPoint.x, firstPoint.y)
+         count = 1
+         return;
+      }
+
+      if (count == 1) {
+         deletePixel(firstPoint.x, firstPoint.y)
+         secondPoint = getMousePos(canvas, e);
+         var a = Math.abs(firstPoint.x - secondPoint.x);
+         var b = Math.abs(firstPoint.y - secondPoint.y);
+         var radius = Math.sqrt(a * a + b * b);
+         radius = Math.round(radius);
+
+         var x0 = firstPoint.x;
+         var y0 = firstPoint.y;
+
+         var x = radius;
+         var y = 0;
+         var radiusError = 1 - x;
+
+         while (x >= y) {
+            drawPixel(x + x0, y + y0);
+            drawPixel(y + x0, x + y0);
+            drawPixel(-x + x0, y + y0);
+            drawPixel(-y + x0, x + y0);
+            drawPixel(-x + x0, -y + y0);
+            drawPixel(-y + x0, -x + y0);
+            drawPixel(x + x0, -y + y0);
+            drawPixel(y + x0, -x + y0);
+            y++;
+
+            if (radiusError < 0) {
+               radiusError += 2 * y + 1;
+            }
+            else {
+               x--;
+               radiusError += 2 * (y - x + 1);
+            }
+         }
+         count = 0;
+         return;
+      }
+   }
+
+
+
    function handleClick(e){
       console.log(radio.value)
       if (radio.value == 'Pixel') {
@@ -86,7 +146,9 @@ window.addEventListener('load',() => {
       else if (radio.value == 'Line') {
          drawLine(e);
       }
-
+      else if (radio.value == 'Circle') {
+         drawCircle(e);
+      }
    }
 
 
