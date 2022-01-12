@@ -2,7 +2,8 @@ const sizeEl = document.querySelector('.size')
 const applyBtn = document.querySelector('.btn')
 const color = document.querySelector('.color')
 
-const radio = document.querySelector('input[type=radio]:checked');
+var radio = document.querySelector('input[type=radio]:checked');
+
 
 window.addEventListener('load',() => {
    const canvas = document.querySelector("#canvas");
@@ -10,9 +11,6 @@ window.addEventListener('load',() => {
 
    ctx.canvas.width  = 16*sizeEl.value;
    ctx.canvas.height = 9*sizeEl.value;
-
-   //var
-
 
    function  getMousePos(canvas, evt) {
       var rect = canvas.getBoundingClientRect(), // abs. size of element
@@ -45,7 +43,6 @@ window.addEventListener('load',() => {
       while(true) {
          ctx.fillStyle = color.value;
          ctx.fillRect(x0, y0, 1,1);
-         // setPixel(x0, y0); Do what you need to for this
 
          if ((x0 === x1) && (y0 === y1)) break;
          var e2 = 2*error;
@@ -71,7 +68,6 @@ window.addEventListener('load',() => {
          secondPoint = getMousePos(canvas, e);
          ctx.fillRect(Math.round(secondPoint.x), Math.round(secondPoint.y), 1, 1);
          line(Math.round(firstPoint.x), Math.round(firstPoint.y), Math.round(secondPoint.x), Math.round(secondPoint.y));
-         //line(20,20,35,30);
          count = 0;
          console.log(Math.round(firstPoint.x), Math.round(firstPoint.y), Math.round(secondPoint.x), Math.round(secondPoint.y));
          return;
@@ -139,7 +135,9 @@ window.addEventListener('load',() => {
 
 
    function handleClick(e){
+      radio = document.querySelector('input[type=radio]:checked');
       console.log(radio.value)
+
       if (radio.value == 'Pixel') {
          pixelOnClick(e);
       }
