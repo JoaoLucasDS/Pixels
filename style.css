@@ -13,7 +13,6 @@
     padding: 3px;
 
     image-rendering: optimizeSpeed;
-
     image-rendering: pixelated;
 
 }
@@ -41,6 +40,21 @@ body{
     justify-content: center;
     align-items: center;
 }
+
+.selector{
+    width: 800px;
+    border-radius: 3px;
+    margin-bottom: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+input[type="radio"] {
+    vertical-align: middle;
+
+}
+
 .btn, input{
     height: 35px;
     padding: 0 2em;
