@@ -23,14 +23,19 @@ window.addEventListener('load',() => {
       }
    }
 
-
    function pixelOnClick(e){
       var mousePositon = getMousePos(canvas,e);
 
       ctx.fillStyle = color.value;
-      ctx.fillRect(Math.round(mousePositon.x), Math.round(mousePositon.y), 1, 1)
+      drawPixel(mousePositon.x,mousePositon.y)
       return;
+   }
 
+   function eraser(e) {
+      var mousePositon = getMousePos(canvas,e);
+
+      deletePixel(mousePositon.x,mousePositon.y)
+      return;
    }
 
    function line(x0,y0,x1,y1){
@@ -58,15 +63,15 @@ window.addEventListener('load',() => {
 
    function drawLine(e) {
       if (count == 0) {
-         ctx.fillStyle = 'black';
          firstPoint = getMousePos(canvas, e);
-         ctx.fillRect(Math.round(firstPoint.x), Math.round(firstPoint.y), 1, 1);
+
+         drawGhostPixel(firstPoint.x, firstPoint.y)
+
          count = 1;
          return;
       }
       if (count == 1) {
          secondPoint = getMousePos(canvas, e);
-         ctx.fillRect(Math.round(secondPoint.x), Math.round(secondPoint.y), 1, 1);
          line(Math.round(firstPoint.x), Math.round(firstPoint.y), Math.round(secondPoint.x), Math.round(secondPoint.y));
          count = 0;
          console.log(Math.round(firstPoint.x), Math.round(firstPoint.y), Math.round(secondPoint.x), Math.round(secondPoint.y));
@@ -80,15 +85,24 @@ window.addEventListener('load',() => {
       return;
    }
 
+   function drawGhostPixel(x,y){
+      ctx.fillStyle = 'black';
+      ctx.fillRect(Math.round(x), Math.round(y), 1, 1)
+      return;
+   }
+
    function deletePixel(x,y){
       ctx.clearRect(Math.round(x), Math.round(y), 1, 1)
       return;
    }
 
+
+
    function drawCircle(e){
       if (count == 0){
          firstPoint = getMousePos(canvas, e);
-         drawPixel(firstPoint.x, firstPoint.y)
+         drawGhostPixel(firstPoint.x, firstPoint.y)
+
          count = 1
          return;
       }
@@ -136,7 +150,6 @@ window.addEventListener('load',() => {
 
    function handleClick(e){
       radio = document.querySelector('input[type=radio]:checked');
-      console.log(radio.value)
 
       if (radio.value == 'Pixel') {
          pixelOnClick(e);
@@ -147,17 +160,31 @@ window.addEventListener('load',() => {
       else if (radio.value == 'Circle') {
          drawCircle(e);
       }
+      else if (radio.value == 'Eraser') {
+         eraser(e);
+      }
    }
-
-
    canvas.addEventListener("click", handleClick);
 
+   function toExport() {
+      var img = new Image;
+      img.src = 'img/base.png';
+      img.onload = () => ctx.drawImage(img, 0, 0);
+   }
+
    applyBtn.addEventListener('click', function(){
+      //if((ctx.canvas.width/sizeEl.value) == 16){return;}
+      let img = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height);
+
       ctx.canvas.width  = 16*sizeEl.value;
       ctx.canvas.height = 9*sizeEl.value;
 
-   })
+      //console.log(ctx.canvas.width/2)
+      ctx.putImageData(img,0,0);
 
+      //ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+   })
 });
 
 

@@ -11,6 +11,7 @@
     display: inline-grid;
     gap: 3px;
     padding: 3px;
+    background-color: #d9d6d6;
 
     image-rendering: optimizeSpeed;
     image-rendering: pixelated;

@@ -42,6 +42,8 @@ function reset(){
     populate(size)
 }
 
+
+
 resetBtn.addEventListener('click', reset)
 
 sizeEl.addEventListener('keyup', function(){
