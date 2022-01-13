@@ -1,9 +1,11 @@
 const sizeEl = document.querySelector('.size')
-const applyBtn = document.querySelector('.btn')
 const color = document.querySelector('.color')
 
-var radio = document.querySelector('input[type=radio]:checked');
+const applyBtn = document.querySelector(".apply")
+const clearBtn = document.querySelector(".clear")
 
+
+var radio = document.querySelector('input[type=radio]:checked');
 
 window.addEventListener('load',() => {
    const canvas = document.querySelector("#canvas");
@@ -18,7 +20,7 @@ window.addEventListener('load',() => {
           scaleY = canvas.height / rect.height;  // relationship bitmap vs. element for Y
 
       return {
-         x: (evt.clientX - rect.left) * scaleX,   // scale mouse coordinates after they have
+         x: (evt.clientX - rect.left) * scaleX  ,   // scale mouse coordinates after they have
          y: (evt.clientY - rect.top) * scaleY     // been adjusted to be relative to element
       }
    }
@@ -72,27 +74,26 @@ window.addEventListener('load',() => {
       }
       if (count == 1) {
          secondPoint = getMousePos(canvas, e);
-         line(Math.round(firstPoint.x), Math.round(firstPoint.y), Math.round(secondPoint.x), Math.round(secondPoint.y));
+         line(Math.floor(firstPoint.x), Math.floor(firstPoint.y), Math.floor(secondPoint.x), Math.floor(secondPoint.y));
          count = 0;
-         console.log(Math.round(firstPoint.x), Math.round(firstPoint.y), Math.round(secondPoint.x), Math.round(secondPoint.y));
          return;
       }
    }
 
    function drawPixel(x,y){
       ctx.fillStyle = color.value;
-      ctx.fillRect(Math.round(x), Math.round(y), 1, 1)
+      ctx.fillRect(Math.floor(x), Math.floor(y), 1, 1)
       return;
    }
 
    function drawGhostPixel(x,y){
       ctx.fillStyle = 'black';
-      ctx.fillRect(Math.round(x), Math.round(y), 1, 1)
+      ctx.fillRect(Math.floor(x), Math.floor(y), 1, 1)
       return;
    }
 
    function deletePixel(x,y){
-      ctx.clearRect(Math.round(x), Math.round(y), 1, 1)
+      ctx.clearRect(Math.floor(x), Math.floor(y), 1, 1)
       return;
    }
 
@@ -172,17 +173,38 @@ window.addEventListener('load',() => {
       img.onload = () => ctx.drawImage(img, 0, 0);
    }
 
+   function clearCanvas(e){
+      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+   }
+
+   clearBtn.addEventListener('click',clearCanvas);
+
    applyBtn.addEventListener('click', function(){
-      //if((ctx.canvas.width/sizeEl.value) == 16){return;}
-      let img = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height);
+      var img = new Image;
 
-      ctx.canvas.width  = 16*sizeEl.value;
-      ctx.canvas.height = 9*sizeEl.value;
+      var oldWidth = ctx.canvas.width;
+      var oldHeight = ctx.canvas.height;
+      var newWidth = 16*sizeEl.value;
+      var newHeight = 9*sizeEl.value;
 
-      //console.log(ctx.canvas.width/2)
-      ctx.putImageData(img,0,0);
+      if(ctx.canvas.width > 16*sizeEl.value){ //diminui
+         img = ctx.getImageData((oldWidth/2)-(newWidth/2), (oldHeight/2)-(newHeight/2), newWidth, newHeight);
 
-      //ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+         ctx.canvas.width  = 16*sizeEl.value;
+         ctx.canvas.height = 9*sizeEl.value;
+
+         ctx.putImageData(img,0,0);
+      }
+      else if(ctx.canvas.width < 16*sizeEl.value){ //aumenta
+         img = ctx.getImageData(0, 0, oldWidth, oldHeight);
+
+         ctx.canvas.width  = 16*sizeEl.value;
+         ctx.canvas.height = 9*sizeEl.value;
+
+         ctx.putImageData(img,(newWidth/2)-(oldWidth/2), (newHeight/2)-(oldHeight/2));
+      }
+      else{return;}
+
 
    })
 });
