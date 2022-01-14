@@ -1,18 +1,20 @@
-const sizeEl = document.querySelector('.size')
-const color = document.querySelector('.color')
-
-const applyBtn = document.querySelector(".apply")
 const clearBtn = document.querySelector(".clear")
-
+const zoomBtn = document.querySelector(".zoom")
+const colorBtn = document.querySelector(".color")
+const colorPicker = document.querySelector('.colorPicker')
 
 var radio = document.querySelector('input[type=radio]:checked');
+var size = 10;
+
 
 window.addEventListener('load',() => {
    const canvas = document.querySelector("#canvas");
    const ctx = canvas.getContext("2d");
 
-   ctx.canvas.width  = 16*sizeEl.value;
-   ctx.canvas.height = 9*sizeEl.value;
+   zoomBtn.children[1].innerHTML=size;
+
+   ctx.canvas.width  = 16*size;
+   ctx.canvas.height = 9*size;
 
    function  getMousePos(canvas, evt) {
       var rect = canvas.getBoundingClientRect(), // abs. size of element
@@ -25,18 +27,18 @@ window.addEventListener('load',() => {
       }
    }
 
-   function pixelOnClick(e){
+   function drawPixel(e){
       var mousePositon = getMousePos(canvas,e);
 
-      ctx.fillStyle = color.value;
-      drawPixel(mousePositon.x,mousePositon.y)
+      ctx.fillStyle = colorPicker.value;
+      pixel(mousePositon.x,mousePositon.y)
       return;
    }
 
    function eraser(e) {
       var mousePositon = getMousePos(canvas,e);
 
-      deletePixel(mousePositon.x,mousePositon.y)
+      ctx.clearRect(Math.floor(mousePositon.x)-5, Math.floor(mousePositon.y)-5, 10, 10)
       return;
    }
 
@@ -48,7 +50,7 @@ window.addEventListener('load',() => {
       var error = dx - dy;
 
       while(true) {
-         ctx.fillStyle = color.value;
+         ctx.fillStyle = colorPicker.value;
          ctx.fillRect(x0, y0, 1,1);
 
          if ((x0 === x1) && (y0 === y1)) break;
@@ -80,8 +82,8 @@ window.addEventListener('load',() => {
       }
    }
 
-   function drawPixel(x,y){
-      ctx.fillStyle = color.value;
+   function pixel(x,y){
+      ctx.fillStyle = colorPicker.value;
       ctx.fillRect(Math.floor(x), Math.floor(y), 1, 1)
       return;
    }
@@ -124,14 +126,14 @@ window.addEventListener('load',() => {
          var radiusError = 1 - x;
 
          while (x >= y) {
-            drawPixel(x + x0, y + y0);
-            drawPixel(y + x0, x + y0);
-            drawPixel(-x + x0, y + y0);
-            drawPixel(-y + x0, x + y0);
-            drawPixel(-x + x0, -y + y0);
-            drawPixel(-y + x0, -x + y0);
-            drawPixel(x + x0, -y + y0);
-            drawPixel(y + x0, -x + y0);
+            pixel(x + x0, y + y0);
+            pixel(y + x0, x + y0);
+            pixel(-x + x0, y + y0);
+            pixel(-y + x0, x + y0);
+            pixel(-x + x0, -y + y0);
+            pixel(-y + x0, -x + y0);
+            pixel(x + x0, -y + y0);
+            pixel(y + x0, -x + y0);
             y++;
 
             if (radiusError < 0) {
@@ -147,25 +149,26 @@ window.addEventListener('load',() => {
       }
    }
 
-
-
-   function handleClick(e){
+   function handleFunction(e){
+      console.log('ae')
       radio = document.querySelector('input[type=radio]:checked');
 
       if (radio.value == 'Pixel') {
-         pixelOnClick(e);
+         canvas.addEventListener("click", drawPixel(e));
       }
       else if (radio.value == 'Line') {
-         drawLine(e);
+         canvas.addEventListener("click", drawLine(e));
       }
       else if (radio.value == 'Circle') {
-         drawCircle(e);
+         canvas.addEventListener("click", drawCircle(e));
       }
       else if (radio.value == 'Eraser') {
-         eraser(e);
+         canvas.addEventListener("click", eraser(e));
       }
    }
-   canvas.addEventListener("click", handleClick);
+
+   canvas.addEventListener("click", handleFunction);
+
 
    function toExport() {
       var img = new Image;
@@ -177,35 +180,66 @@ window.addEventListener('load',() => {
       ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
    }
 
+
    clearBtn.addEventListener('click',clearCanvas);
 
-   applyBtn.addEventListener('click', function(){
-      var img = new Image;
+   colorBtn.addEventListener('click', function(){
+      colorPicker.focus();
+      colorPicker.click();
 
-      var oldWidth = ctx.canvas.width;
-      var oldHeight = ctx.canvas.height;
-      var newWidth = 16*sizeEl.value;
-      var newHeight = 9*sizeEl.value;
+   })
 
-      if(ctx.canvas.width > 16*sizeEl.value){ //diminui
+   colorPicker.addEventListener("change", function(){
+      colorBtn.children[0].style.color=colorPicker.value;
+   })
+
+   var img = new Image;
+
+   zoomBtn.children[0].addEventListener("click", function () {
+      if ((size - 1) > 1){
+         size -= 1;
+         console.log(typeof size);
+
+         var oldWidth = ctx.canvas.width;
+         var oldHeight = ctx.canvas.height;
+
+         var newWidth = 16*size;
+         var newHeight = 9*size;
+
          img = ctx.getImageData((oldWidth/2)-(newWidth/2), (oldHeight/2)-(newHeight/2), newWidth, newHeight);
 
-         ctx.canvas.width  = 16*sizeEl.value;
-         ctx.canvas.height = 9*sizeEl.value;
+         ctx.canvas.width  = 16*size;
+         ctx.canvas.height = 9*size;
 
          ctx.putImageData(img,0,0);
+
+         zoomBtn.children[1].innerHTML=size.toLocaleString('en-US',
+             {minimumIntegerDigits: 2, useGrouping:false});
       }
-      else if(ctx.canvas.width < 16*sizeEl.value){ //aumenta
+      return;
+   })
+
+   zoomBtn.children[2].addEventListener("click", function () {
+      if ((size + 1) < 100){
+         size += 1;
+
+         var oldWidth = ctx.canvas.width;
+         var oldHeight = ctx.canvas.height;
+
+         var newWidth = 16*size;
+         var newHeight = 9*size;
+
          img = ctx.getImageData(0, 0, oldWidth, oldHeight);
 
-         ctx.canvas.width  = 16*sizeEl.value;
-         ctx.canvas.height = 9*sizeEl.value;
+         ctx.canvas.width  = 16*size;
+         ctx.canvas.height = 9*size;
 
          ctx.putImageData(img,(newWidth/2)-(oldWidth/2), (newHeight/2)-(oldHeight/2));
+
+         zoomBtn.children[1].innerHTML=size.toLocaleString('en-US',
+             {minimumIntegerDigits: 2, useGrouping:false});
       }
-      else{return;}
-
-
+      return;
    })
 });
 
