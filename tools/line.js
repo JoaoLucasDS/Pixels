@@ -38,8 +38,6 @@ export function Bresenham2(startPoint,endPoint){
     let sy = (startPoint.y < endPoint.y  ? 1 : -1);
     let error = dx - dy;
 
-
-
     while(startPoint.x !== endPoint.x || startPoint.y !== endPoint.y) {;
         let twoTimesError = 2 * error;
 
@@ -60,7 +58,7 @@ export function drawLine(e) {
     }
     if (count == 1) {
         secondPoint = board.floorMousePos(board.canvas,e);
-        Bresenham2(firstPoint, secondPoint);
+        Bresenham(firstPoint, secondPoint);
         count = 0;
         return;
     }
