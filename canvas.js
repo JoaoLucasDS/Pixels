@@ -3,6 +3,7 @@ const zoomBtn = document.querySelector(".zoom")
 const colorBtn = document.querySelector(".color")
 const colorPicker = document.querySelector('.colorPicker')
 
+
 var radio = document.querySelector('input[type=radio]:checked');
 var size = 10;
 
@@ -61,9 +62,10 @@ window.addEventListener('load',() => {
       return;
    }
 
-   var count = 0
+   var count = 0;
    var firstPoint;
    var secondPoint;
+   var auxPoint;
 
    function drawLine(e) {
       if (count == 0) {
@@ -149,6 +151,63 @@ window.addEventListener('load',() => {
       }
    }
 
+
+
+   function pixelIsColored(x, y){
+
+      let imgData = ctx.getImageData(x, y, 1, 1);
+
+      let red = imgData.data[0];
+      let green = imgData.data[1];
+      let blue = imgData.data[2];
+
+      console.log(red,green,blue)
+
+      if (red || green || blue != 0){
+         return true;
+      }
+      else{
+         return false;
+      }
+
+   }
+
+   function floodFill(e){
+      let queue = [];
+      let currentPoint, pixelColor, upPosition, downPosition, leftPosition, rightPosition, inLimits;
+
+      auxPoint = getMousePos(canvas, e);
+      console.log('Passou 1')
+      queue.push([auxPoint.x, auxPoint.y]);
+
+      while (queue.length > 0){
+         console.log('Passou 2')
+         currentPoint = queue.shift();
+         pixelColor = pixelIsColored(currentPoint[0], currentPoint[1]);
+
+         upPosition    = [currentPoint[0] + 1, currentPoint[1]];
+         downPosition  = [currentPoint[0] - 1, currentPoint[1]];
+         leftPosition  = [currentPoint[0], currentPoint[1] - 1];
+         rightPosition = [currentPoint[0], currentPoint[1] + 1];
+         console.log(upPosition, downPosition, leftPosition, rightPosition);
+
+         inLimits   = (currentPoint[0] < ctx.canvas.width && currentPoint[1] < ctx.canvas.height);
+         console.log(inLimits, pixelColor);
+
+         if (inLimits == true &&  pixelColor == false) {
+            console.log('Pintou')
+            pixel(currentPoint[0], currentPoint[1]);
+
+            queue.push(upPosition);
+            queue.push(downPosition);
+            queue.push(rightPosition);
+            queue.push(leftPosition);
+         }
+
+      }
+
+   }
+
    function handleFunction(e){
       console.log('ae')
       radio = document.querySelector('input[type=radio]:checked');
@@ -161,6 +220,9 @@ window.addEventListener('load',() => {
       }
       else if (radio.value == 'Circle') {
          canvas.addEventListener("click", drawCircle(e));
+      }
+      else if (radio.value == 'FloodFill'){
+         canvas.addEventListener("click", floodFill(e));
       }
       else if (radio.value == 'Eraser') {
          canvas.addEventListener("click", eraser(e));
