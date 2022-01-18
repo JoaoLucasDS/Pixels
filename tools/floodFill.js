@@ -15,7 +15,7 @@ function pixelIsColored(x, y){
     let green = imgData.data[1];
     let blue = imgData.data[2];
 
-    console.log(red,green,blue)
+    //console.log(red,green,blue)
 
     if (red || green || blue != 0){
         return true;
@@ -28,14 +28,16 @@ function pixelIsColored(x, y){
 
 export function floodFill(e){
     let queue = [];
-    let currentPoint, pixelColor, upPosition, downPosition, leftPosition, rightPosition, inLimits;
+    let currentPoint, pixelColor, upPosition, downPosition, leftPosition, rightPosition, inLimits, isPositive;
 
     auxPoint = board.floorMousePos(board.canvas, e);
-    console.log('Passou 1')
+    //console.log('Passou 1')
     queue.push([auxPoint.x, auxPoint.y]);
 
+    //let aux = board.virtualCanvas(board.canvas);
+
     while (queue.length > 0){
-        console.log('Passou 2')
+        //console.log('Passou 2')
         currentPoint = queue.shift();
         pixelColor = pixelIsColored(currentPoint[0], currentPoint[1]);
 
@@ -43,13 +45,16 @@ export function floodFill(e){
         downPosition  = [currentPoint[0] - 1, currentPoint[1]];
         leftPosition  = [currentPoint[0], currentPoint[1] - 1];
         rightPosition = [currentPoint[0], currentPoint[1] + 1];
-        console.log(upPosition, downPosition, leftPosition, rightPosition);
+        //console.log(upPosition, downPosition, leftPosition, rightPosition);
 
-        inLimits   = (currentPoint[0] < board.ctx.canvas.width && currentPoint[1] < board.ctx.canvas.height);
-        console.log(inLimits, pixelColor);
 
-        if (inLimits == true &&  pixelColor == false) {
-            console.log('Pintou')
+        inLimits = (currentPoint[0] < board.ctx.canvas.width && currentPoint[1] < board.ctx.canvas.height);
+        isPositive = (currentPoint[0] >= 0 && currentPoint[1] >= 0);
+
+        //console.log(inLimits, pixelColor, isPositive);
+
+        if (inLimits == true &&  pixelColor == false && isPositive == true) {
+            //console.log('Pintou')
             pixel(currentPoint[0], currentPoint[1]);
 
             queue.push(upPosition);
