@@ -6,7 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
         <link rel="stylesheet" href="style.css">
-        <title>Document</title>
+        <script src="https://unpkg.com/mathjs@10.1.0/lib/browser/math.js"></script>
+        <title>Paint 2</title>
     </head>
 
     <body>
@@ -19,21 +20,29 @@
 
         <button class="zoom">
             <span class="zoomOut"><i class="fa fa-minus-circle"></i></span>
-            <span class="zoomText">10</span>
+            <span class="zoomText">Zoom</span>
             <span class="zoomIn"><i class="fa fa-plus-circle"></i></span>
+        </button>
+
+        <button class="points">
+            <span class="pointsMinus"><i class="fa fa-minus-circle"></i></span>
+            <span class="pointsText">n Points</span>
+            <span class="pointsPlus"><i class="fa fa-plus-circle"></i></span>
         </button>
 
         <button class="color",id="color">Color
             <span class="colorBtnIcon" id="colorBtnIcon" ><i class="fas fa-circle" ></i></span>
             <span class="colorPickerSpan" id="colorPickerSpan" ><input type="color" value="#555555" id="colorPicker" class="colorPicker"></span>
         </button>
-
     </div>
+
     <div class="selector">
         <label class="radioContainer">
             <input type="radio" name="tools" value="Pixel" class="checkmark"> Pixel</label>
         <label class="radioContainer">
             <input type="radio" name="tools" value="Line" class="checkmark" checked> Line</label>
+        <label class="radioContainer">
+            <input type="radio" name="tools" value="Curve" class="checkmark"> Curve</label>
         <label class="radioContainer">
             <input type="radio" name="tools" value="Circle" class="checkmark"> Circle</label>
         <label class="radioContainer">

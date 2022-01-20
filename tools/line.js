@@ -26,11 +26,11 @@ export function Bresenham(startPoint,endPoint){
     return;
 }
 
-export function Bresenham2(startPoint,endPoint){
-    startPoint.x = Math.round(startPoint.x);
-    startPoint.y = Math.round(startPoint.y);
-    endPoint.x = Math.round(endPoint.x);
-    endPoint.y = Math.round(endPoint.y);
+export function BresenhamOpt(startPoint, endPoint){
+    startPoint.x = Math.floor(startPoint.x);
+    startPoint.y = Math.floor(startPoint.y);
+    endPoint.x = Math.floor(endPoint.x);
+    endPoint.y = Math.floor(endPoint.y);
 
     let dx = Math.abs(endPoint.x - startPoint.x);
     let dy = Math.abs(endPoint.y - startPoint.y);

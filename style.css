@@ -94,6 +94,16 @@ button:active {
     padding-right: 2px;
 }
 
+.pointsText{
+    padding: 10px;
+}
+.pointsMinus{
+    padding-left: 5px;
+}
+.pointsPlus{
+    padding-right: 5px;
+}
+
 .selector{
     width: 800px;
     border-radius: 3px;

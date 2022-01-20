@@ -9,6 +9,7 @@ import {drawCurve} from "./tools/curve.js";
 
 const clearBtn = document.querySelector(".clear")
 const zoomBtn = document.querySelector(".zoom")
+const pointsBtn = document.querySelector(".points")
 const colorBtn = document.querySelector(".color")
 export const colorPicker = document.querySelector('.colorPicker')
 
@@ -19,6 +20,7 @@ const ctx = canvas.getContext("2d");
 
 
 export let size = 10;
+export let numberOfPoints = 3;
 let pressing = false;
 let selectedTool = (document.querySelector('input[type=radio]:checked')).value;
 
@@ -57,7 +59,7 @@ function handleFunction(e){
         pressing = false;
         eraser(e);
     }
-    if (selectedTool == 'Test') {
+    if (selectedTool == 'Curve') {
         drawCurve(e);
     }
 }
@@ -65,6 +67,7 @@ function handleFunction(e){
 
 window.addEventListener('load',() => {
     zoomBtn.children[1].innerHTML=size;
+    pointsBtn.children[1].innerHTML=numberOfPoints;
     board.boardRes(size);
 
 
@@ -142,6 +145,21 @@ window.addEventListener('load',() => {
         return;
     })
 
+    pointsBtn.children[0].addEventListener("click", function () {
+        if ((numberOfPoints)>1){
+            numberOfPoints -= 1;
+
+            pointsBtn.children[1].innerHTML=numberOfPoints;
+        }
+    })
+
+    pointsBtn.children[2].addEventListener("click", function () {
+        if ((numberOfPoints)<5){
+            numberOfPoints += 1;
+
+            pointsBtn.children[1].innerHTML=numberOfPoints;
+        }
+    })
 
 
 
