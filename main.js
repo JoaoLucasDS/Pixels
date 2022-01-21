@@ -5,6 +5,7 @@ import {drawLine} from "./tools/line.js";
 import {drawPixel,drawPen} from "./tools/pixel.js";
 import {eraser} from "./tools/eraser.js";
 import {floodFill} from "./tools/floodFill.js";
+import {scanLine} from "./tools/scanLine.js";
 import {drawCurve} from "./tools/curve.js";
 
 const clearBtn = document.querySelector(".clear")
@@ -54,6 +55,11 @@ function handleFunction(e){
         pressing = false;
         console.log('bereta')
         floodFill(e);
+    }
+    if (selectedTool == 'ScanLine') {
+        pressing = false;
+        console.log('Passou')
+        scanLine();
     }
     if (selectedTool == 'Eraser') {
         pressing = false;
