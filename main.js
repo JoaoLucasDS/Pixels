@@ -1,7 +1,7 @@
 import * as board from './board.js';
 
 import {drawCircle} from "./tools/circle.js";
-import {drawLine} from "./tools/line.js";
+import {drawLine, drawPolyline, clearVisitedPoints} from "./tools/line.js";
 import {drawPixel,drawPen} from "./tools/pixel.js";
 import {eraser} from "./tools/eraser.js";
 import {floodFill} from "./tools/floodFill.js";
@@ -44,6 +44,10 @@ function handleFunction(e){
         pressing = false;
         drawCircle(e);
     }
+    if (selectedTool == 'Polyline') {
+        pressing = false;
+        drawPolyline(e);
+    }
     if (selectedTool == 'Pen') {
         board.canvas.addEventListener("mousemove", function pen(e) {
             if (pressing) {
@@ -53,7 +57,6 @@ function handleFunction(e){
     }
     if (selectedTool == 'FloodFill') {
         pressing = false;
-        console.log('bereta')
         floodFill(e);
     }
     if (selectedTool == 'ScanLine') {
@@ -154,14 +157,17 @@ window.addEventListener('load',() => {
     pointsBtn.children[0].addEventListener("click", function () {
         if ((numberOfPoints)>1){
             numberOfPoints -= 1;
+            clearVisitedPoints()
 
             pointsBtn.children[1].innerHTML=numberOfPoints;
         }
+
     })
 
     pointsBtn.children[2].addEventListener("click", function () {
         if ((numberOfPoints)<5){
             numberOfPoints += 1;
+            clearVisitedPoints()
 
             pointsBtn.children[1].innerHTML=numberOfPoints;
         }

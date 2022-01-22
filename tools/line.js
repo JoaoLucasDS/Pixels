@@ -1,8 +1,11 @@
 import * as board from '../board.js';
 import {pixel,ghostPixel} from "./pixel.js";
+import {numberOfPoints} from "../main.js";
 
 let firstPoint;
 let secondPoint;
+
+export var visitedPoints = [];
 
 let count = 0;
 
@@ -16,14 +19,14 @@ export function Bresenham(startPoint,endPoint){
 
 
     while(true) {
-        pixel(startPoint.x,startPoint.y)
+
+        pixel(startPoint.x,startPoint.y);
 
         if ((startPoint.x === endPoint.x ) && (startPoint.y === endPoint.y)) break;
         let e2 = 2*error;
         if (e2 > -dy) { error -= dy; startPoint.x  += sx; }
         if (e2 < dx) { error += dx; startPoint.y  += sy; }
     }
-    return;
 }
 
 export function BresenhamOpt(startPoint, endPoint){
@@ -63,3 +66,50 @@ export function drawLine(e) {
         return;
     }
 }
+
+export function clearVisitedPoints(){
+    visitedPoints = [];
+}
+
+
+export function drawPolyline(e){
+    let point;
+    if (visitedPoints.length==numberOfPoints){
+        console.log('reset Poly');
+        clearVisitedPoints();
+
+        point = board.floorMousePos(board.canvas,e);
+        visitedPoints.push(point);
+        ghostPixel(point.x,point.y);
+    }
+    else{
+        point = board.floorMousePos(board.canvas,e);
+        visitedPoints[visitedPoints.length] = point;
+
+        ghostPixel(point.x,point.y);
+        console.log(point);
+        console.log(visitedPoints);
+
+        if (visitedPoints.length==numberOfPoints){
+
+            let array = visitedPoints.map(a => {return {...a}}); //copy
+            polyline(array);
+
+            console.log(visitedPoints);
+            array = visitedPoints.map(a => {return {...a}}); //copy
+            Bresenham(array[0],array[array.length-1]);
+
+            console.log(visitedPoints);
+        }
+    }
+}
+
+function polyline(array){
+    while(count < array.length-1){
+        Bresenham(array[count],array[count+1]);
+        count+=1;
+    }
+    count=0;
+
+}
+
