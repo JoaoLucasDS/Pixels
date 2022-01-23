@@ -1,16 +1,18 @@
 import * as board from './board.js';
 
 import {drawCircle} from "./tools/circle.js";
-import {drawLine, drawPolyline, clearVisitedPoints} from "./tools/line.js";
+import {drawLine, drawPolyline, clearVisitedPoints, visitedPoints} from "./tools/line.js";
 import {drawPixel,drawPen} from "./tools/pixel.js";
 import {eraser} from "./tools/eraser.js";
 import {floodFill} from "./tools/floodFill.js";
 import {scanLine} from "./tools/scanLine.js";
 import {drawCurve} from "./tools/curve.js";
+import {generateCoordinates} from "./transformations/rotation.js";
 
 const clearBtn = document.querySelector(".clear")
 const zoomBtn = document.querySelector(".zoom")
 const pointsBtn = document.querySelector(".points")
+const transformBtn = document.querySelector(".transformNumber")
 const colorBtn = document.querySelector(".color")
 export const colorPicker = document.querySelector('.colorPicker')
 
@@ -22,6 +24,8 @@ const ctx = canvas.getContext("2d");
 
 export let size = 10;
 export let numberOfPoints = 3;
+export let transformValue = 10;
+
 let pressing = false;
 let selectedTool = (document.querySelector('input[type=radio]:checked')).value;
 
@@ -32,44 +36,36 @@ function ECHO(){
 
 function handleFunction(e){
     pressing = true;
-    if (selectedTool == 'Pixel') {
-        pressing = false;
-        drawPixel(e);
+    if (selectedTool == 'Pixel') {pressing = false; drawPixel(e);}
+    if (selectedTool == 'Line') {pressing = false; drawLine(e);}
+    if (selectedTool == 'Circle') {pressing = false; drawCircle(e);}
+    if (selectedTool == 'Curve') {pressing = false; drawCurve(e);}
+    if (selectedTool == 'Pen') {
+        board.canvas.addEventListener("mousemove", function pen(e) {
+            if (pressing) {drawPen(e)}
+        });
     }
-    if (selectedTool == 'Line') {
-        pressing = false;
-        drawLine(e);
-    }
-    if (selectedTool == 'Circle') {
-        pressing = false;
-        drawCircle(e);
-    }
+    if (selectedTool == 'FloodFill') {pressing = false; floodFill(e);}
+    if (selectedTool == 'Eraser') {pressing = false; eraser(e);}
+
+
+    //polygon
+
     if (selectedTool == 'Polyline') {
         pressing = false;
         drawPolyline(e);
-    }
-    if (selectedTool == 'Pen') {
-        board.canvas.addEventListener("mousemove", function pen(e) {
-            if (pressing) {
-                drawPen(e)
-            }
-        });
-    }
-    if (selectedTool == 'FloodFill') {
-        pressing = false;
-        floodFill(e);
     }
     if (selectedTool == 'ScanLine') {
         pressing = false;
         console.log('Passou')
         scanLine();
     }
-    if (selectedTool == 'Eraser') {
-        pressing = false;
-        eraser(e);
-    }
-    if (selectedTool == 'Curve') {
-        drawCurve(e);
+    if (selectedTool == 'Rotation') {
+        //pressing = false;
+        if (visitedPoints.length==numberOfPoints){
+            generateCoordinates(e,transformValue);
+        }
+        //drawProjection(e);
     }
 }
 
@@ -77,6 +73,7 @@ function handleFunction(e){
 window.addEventListener('load',() => {
     zoomBtn.children[1].innerHTML=size;
     pointsBtn.children[1].innerHTML=numberOfPoints;
+    transformBtn.children[1].innerHTML=transformValue;
     board.boardRes(size);
 
 
@@ -87,6 +84,7 @@ window.addEventListener('load',() => {
     colorPicker.addEventListener("change", function(){
         colorBtn.children[0].style.color=colorPicker.value;
     })
+
 
 
     radios.forEach(radio => {
@@ -110,7 +108,6 @@ window.addEventListener('load',() => {
     zoomBtn.children[0].addEventListener("click", function () {
         if ((size - 1) >= 1){
             size -= 1;
-            console.log(typeof size);
 
             let oldWidth = ctx.canvas.width;
             let oldHeight = ctx.canvas.height;
@@ -154,6 +151,12 @@ window.addEventListener('load',() => {
         return;
     })
 
+    pointsBtn.children[1].addEventListener('click', function(){
+        numberOfPoints = 3;
+
+        pointsBtn.children[1].innerHTML=numberOfPoints;
+    })
+
     pointsBtn.children[0].addEventListener("click", function () {
         if ((numberOfPoints)>1){
             numberOfPoints -= 1;
@@ -170,6 +173,29 @@ window.addEventListener('load',() => {
             clearVisitedPoints()
 
             pointsBtn.children[1].innerHTML=numberOfPoints;
+        }
+    })
+
+    transformBtn.children[1].addEventListener('click', function(){
+        transformValue = 10;
+
+        transformBtn.children[1].innerHTML=numberOfPoints;
+    })
+
+    transformBtn.children[0].addEventListener("click", function () {
+        if ((transformValue)>20){
+            transformValue -= 10;
+
+            transformBtn.children[1].innerHTML=transformValue;
+        }
+
+    })
+
+    transformBtn.children[2].addEventListener("click", function () {
+        if ((transformValue)<360){
+            transformValue += 10;
+
+            transformBtn.children[1].innerHTML=transformValue;
         }
     })
 

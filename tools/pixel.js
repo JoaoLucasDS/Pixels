@@ -22,7 +22,7 @@ export function pixel(x,y){
 
     board.ctx.fillStyle = color;
     board.ctx.fillRect(x, y, 1, 1)
-    return;
+    //return;
 }
 
 export function ghostPixel(x,y,color){

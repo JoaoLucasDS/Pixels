@@ -27,7 +27,20 @@ h1{
     color: white;
 }
 
+.option{
+
+    text-align:center;
+    display:inline-block;
+    margin:1px;
+}
+
+.text{
+    color: white;
+    padding-bottom: 5px;
+}
+
 button {
+
     padding-inline: 18px;
     padding-block: 10px;
 
@@ -101,6 +114,16 @@ button:active {
     padding-left: 5px;
 }
 .pointsPlus{
+    padding-right: 5px;
+}
+
+.transformText{
+    padding: 5px;
+}
+.transformMinus{
+    padding-left: 5px;
+}
+.transformPlus{
     padding-right: 5px;
 }
 

@@ -29,6 +29,25 @@ export function Bresenham(startPoint,endPoint){
     }
 }
 
+export function BresenhamEraser(startPoint,endPoint){
+
+    let dx = Math.abs(endPoint.x - startPoint.x);
+    let dy = Math.abs(endPoint.y - startPoint.y);
+    let sx = (startPoint.x < endPoint.x ) ? 1 : -1;
+    let sy = (startPoint.y < endPoint.y ) ? 1 : -1;
+    let error = dx - dy;
+
+
+    while(true) {
+        board.ctx.clearRect(startPoint.x, startPoint.y, 1, 1)
+
+        if ((startPoint.x === endPoint.x ) && (startPoint.y === endPoint.y)) break;
+        let e2 = 2*error;
+        if (e2 > -dy) { error -= dy; startPoint.x  += sx; }
+        if (e2 < dx) { error += dx; startPoint.y  += sy; }
+    }
+}
+
 export function BresenhamOpt(startPoint, endPoint){
     startPoint.x = Math.floor(startPoint.x);
     startPoint.y = Math.floor(startPoint.y);
@@ -95,11 +114,10 @@ export function drawPolyline(e){
             let array = visitedPoints.map(a => {return {...a}}); //copy
             polyline(array);
 
-            console.log(visitedPoints);
+
             array = visitedPoints.map(a => {return {...a}}); //copy
             Bresenham(array[0],array[array.length-1]);
 
-            console.log(visitedPoints);
         }
     }
 }

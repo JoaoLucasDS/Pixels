@@ -13,48 +13,100 @@
     <body>
     <h1>Pixelated White Board</h1>
     <div class="navbar">
-        <button class="clear">
-            <span class="clearBtnIcon"><i class="far fa-trash-alt"></i></span>
-            <span class="clearBtnText">Clear</span>
-        </button>
+        <div class="option">
+            <div class="text">
+                <strong>
+                    Clear Board
+                </strong>
+            </div>
 
-        <button class="zoom">
-            <span class="zoomOut"><i class="fa fa-minus-circle"></i></span>
-            <span class="zoomText">Zoom</span>
-            <span class="zoomIn"><i class="fa fa-plus-circle"></i></span>
-        </button>
+            <button class="clear">
+                <span class="clearBtnIcon"><i class="far fa-trash-alt"></i></span>
+                <span class="clearBtnText">Clear</span>
+            </button>
+        </div>
 
-        <button class="points">
-            <span class="pointsMinus"><i class="fa fa-minus-circle"></i></span>
-            <span class="pointsText">n Points</span>
-            <span class="pointsPlus"><i class="fa fa-plus-circle"></i></span>
-        </button>
+        <div class="option">
+            <div class="text">
+                <strong>
+                    Points
+                </strong>
+            </div>
 
-        <button class="color",id="color">Color
-            <span class="colorBtnIcon" id="colorBtnIcon" ><i class="fas fa-circle" ></i></span>
-            <span class="colorPickerSpan" id="colorPickerSpan" ><input type="color" value="#555555" id="colorPicker" class="colorPicker"></span>
-        </button>
+            <button class="points">
+                <span class="pointsMinus"><i class="fa fa-minus-circle"></i></span>
+                <span class="pointsText">n Points</span>
+                <span class="pointsPlus"><i class="fa fa-plus-circle"></i></span>
+            </button>
+        </div>
+
+        <div class="option">
+            <div class="text">
+                <strong>
+                    Zoom
+                </strong>
+            </div>
+
+            <button class="zoom">
+                <span class="zoomOut"><i class="fa fa-minus-circle"></i></span>
+                <span class="zoomText">Zoom</span>
+                <span class="zoomIn"><i class="fa fa-plus-circle"></i></span>
+            </button>
+        </div>
+
+        <div class="option">
+            <div class="text">
+                <strong>
+                    Transformation Value
+                </strong>
+            </div>
+
+            <button class="transformNumber">
+                <span class="transformMinus"><i class="fa fa-minus-circle"></i></span>
+                <span class="transformText">N</span>
+                <span class="transformPlus"><i class="fa fa-plus-circle"></i></span>
+            </button>
+        </div>
+
+        <div class="option">
+            <div class="text">
+                <strong>
+                    Color Picker
+                </strong>
+            </div>
+
+            <button class="color",id="color">Color
+                <span class="colorBtnIcon" id="colorBtnIcon" ><i class="fas fa-circle" ></i></span>
+                <span class="colorPickerSpan" id="colorPickerSpan" ><input type="color" value="#555555" id="colorPicker" class="colorPicker"></span>
+            </button>
+        </div>
+
     </div>
 
     <div class="selector">
         <label class="radioContainer">
-            <input type="radio" name="tools" value="Pixel" class="checkmark"> Pixel</label>
+            <input type="radio" name="tools" value="Pixel" class="checkmark">Pixel</label>
         <label class="radioContainer">
-            <input type="radio" name="tools" value="Line" class="checkmark" checked> Line</label>
+            <input type="radio" name="tools" value="Line" class="checkmark" checked>Line</label>
         <label class="radioContainer">
-            <input type="radio" name="tools" value="Polyline" class="checkmark"> Polyline</label>
+            <input type="radio" name="tools" value="Curve" class="checkmark">Curve</label>
         <label class="radioContainer">
-            <input type="radio" name="tools" value="Curve" class="checkmark"> Curve</label>
+            <input type="radio" name="tools" value="Circle" class="checkmark">Circle</label>
         <label class="radioContainer">
-            <input type="radio" name="tools" value="Circle" class="checkmark"> Circle</label>
+            <input type="radio" name="tools" value="Pen" class="checkmark">Pen</label>
         <label class="radioContainer">
-            <input type="radio" name="tools" value="Pen" class="checkmark"> Pen</label>
+            <input type="radio" name="tools" value="FloodFill" class="checkmark">FloodFill</label>
+
         <label class="radioContainer">
-            <input type="radio" name="tools" value="FloodFill" class="checkmark"> FloodFill</label>
+            <input type="radio" name="tools" value="Eraser" class="checkmark">Eraser</label>
+    </div>
+    <div class="selector">
         <label class="radioContainer">
-            <input type="radio" name="tools" value="ScanLine" class="checkmark"> ScanLine</label>
+            <input type="radio" name="tools" value="Polyline" class="checkmark">Polyline</label>
         <label class="radioContainer">
-            <input type="radio" name="tools" value="Eraser" class="checkmark"> Eraser</label>
+            <input type="radio" name="tools" value="ScanLine" class="checkmark">ScanLine</label>
+        <label class="radioContainer">
+            <input type="radio" name="tools" value="Rotation" class="checkmark">Rotation</label>
     </div>
 
     <canvas id = "canvas"></canvas>

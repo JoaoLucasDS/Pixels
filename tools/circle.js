@@ -6,24 +6,6 @@ let secondPoint;
 
 let count = 0;
 
-export function Bresenham(startPoint,endPoint){
-    let dx = Math.abs(endPoint.x - startPoint.x);
-    let dy = Math.abs(endPoint.y - startPoint.y);
-    let sx = (startPoint.x < endPoint.x ) ? 1 : -1;
-    let sy = (startPoint.y < endPoint.y ) ? 1 : -1;
-    let error = dx - dy;
-
-    while(true) {
-        pixel(startPoint.x,startPoint.y)
-
-        if ((startPoint.x === endPoint.x ) && (startPoint.y === endPoint.y)) break;
-        var e2 = 2*error;
-        if (e2 > -dy) { error -= dy; startPoint.x  += sx; }
-        if (e2 < dx) { error += dx; startPoint.y  += sy; }
-    }
-    return;
-}
-
 export function drawCircle(e){
     if (count == 0){
         firstPoint = board.floorMousePos(board.canvas,e);
