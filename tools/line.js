@@ -5,7 +5,7 @@ import {numberOfPoints} from "../main.js";
 let firstPoint;
 let secondPoint;
 
-export var visitedPoints = [];
+export let visitedPoints = [];
 
 let count = 0;
 
@@ -30,7 +30,6 @@ export function Bresenham(startPoint,endPoint){
 }
 
 export function BresenhamEraser(startPoint,endPoint){
-
     let dx = Math.abs(endPoint.x - startPoint.x);
     let dy = Math.abs(endPoint.y - startPoint.y);
     let sx = (startPoint.x < endPoint.x ) ? 1 : -1;
@@ -88,6 +87,10 @@ export function drawLine(e) {
 
 export function clearVisitedPoints(){
     visitedPoints = [];
+}
+
+export function setVisitedPoints(array){
+    visitedPoints = array.map(a => {return {...a}});
 }
 
 

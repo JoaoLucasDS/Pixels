@@ -8,12 +8,14 @@ import {floodFill} from "./tools/floodFill.js";
 import {scanLine} from "./tools/scanLine.js";
 import {drawCurve} from "./tools/curve.js";
 import {generateCoordinates} from "./transformations/rotation.js";
+import {moveRightPolygon,moveLeftPolygon,moveDownPolygon,moveUpPolygon} from "./transformations/translation.js";
 
 const clearBtn = document.querySelector(".clear")
 const zoomBtn = document.querySelector(".zoom")
 const pointsBtn = document.querySelector(".points")
 const transformBtn = document.querySelector(".transformNumber")
 const colorBtn = document.querySelector(".color")
+const selectedTranslation = document.querySelector(".selectedTranslation")
 export const colorPicker = document.querySelector('.colorPicker')
 
 const radios = document.querySelectorAll('input[type=radio]');
@@ -25,6 +27,8 @@ const ctx = canvas.getContext("2d");
 export let size = 10;
 export let numberOfPoints = 3;
 export let transformValue = 10;
+
+let translationOptions = ['Up','Down','Left','Right'];
 
 let pressing = false;
 let selectedTool = (document.querySelector('input[type=radio]:checked')).value;
@@ -67,13 +71,32 @@ function handleFunction(e){
         }
         //drawProjection(e);
     }
+    if (selectedTool == 'Translation') {
+        console.log('AQUI')
+        if(selectedTranslation.innerHTML == 'Up'){
+            moveUpPolygon(e,transformValue);
+        }
+        if(selectedTranslation.innerHTML == 'Down'){
+            moveDownPolygon(e,transformValue);
+        }
+        if(selectedTranslation.innerHTML == 'Left'){
+            moveLeftPolygon(e,transformValue);
+        }
+        if(selectedTranslation.innerHTML == 'Right'){
+            moveRightPolygon(e,transformValue);
+        }
+    }
+
 }
 
 
 window.addEventListener('load',() => {
+    let index = 0;
+
     zoomBtn.children[1].innerHTML=size;
     pointsBtn.children[1].innerHTML=numberOfPoints;
     transformBtn.children[1].innerHTML=transformValue;
+    selectedTranslation.innerHTML=translationOptions[index];
     board.boardRes(size);
 
 
@@ -149,6 +172,18 @@ window.addEventListener('load',() => {
                 {minimumIntegerDigits: 2, useGrouping:false});
         }
         return;
+    })
+
+
+    selectedTranslation.addEventListener('click', function(){
+        if(index == translationOptions.length-1){
+            index=0;
+            selectedTranslation.innerHTML = translationOptions[index];
+        }
+        else{
+            index+=1;
+            selectedTranslation.innerHTML = translationOptions[index];
+        }
     })
 
     pointsBtn.children[1].addEventListener('click', function(){

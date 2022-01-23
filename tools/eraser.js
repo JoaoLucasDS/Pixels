@@ -1,5 +1,5 @@
 import * as board from '../board.js';
-import { BresenhamEraser} from "./line.js";
+import {BresenhamEraser, clearVisitedPoints, visitedPoints} from "./line.js";
 
 let firstPoint;
 let secondPoint;
@@ -29,27 +29,16 @@ export function eraseLine(e) {
 }
 
 export function polylineEraser(e,array){
-    while(count < array.length-1){
-        let startObj={
-            x:array[count][0],
-            y:array[count][1]
-        }
-        let endObj={
-            x:array[count+1][0],
-            y:array[count+1][1]
-        }
-        BresenhamEraser(startObj,endObj);
+    clearVisitedPoints();
+    let copy = array.map(a => {return {...a}});
+
+    //console.log(array);
+    while(count < copy.length-1){
+
+        BresenhamEraser(copy[count],copy[count+1]);
         count+=1;
     }
-    let startObj={
-        x:array[0][0],
-        y:array[0][1]
-    }
-    let endObj={
-        x:array[array.length-1][0],
-        y:array[array.length-1][1]
-    }
-    //console.log('obj1',startObj,endObj);
-    BresenhamEraser(startObj,endObj);
+    BresenhamEraser(array[0], array[array.length-1]);
+
     count=0;
 }

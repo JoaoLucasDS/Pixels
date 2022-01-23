@@ -1,7 +1,9 @@
-import {numberOfPoints} from "../main.js";
 import * as board from "../board.js";
-import {Bresenham, clearVisitedPoints, visitedPoints} from "../tools/line.js";
 import {pixel} from "../tools/pixel.js";
+import {numberOfPoints} from "../main.js";
+
+import {Bresenham, visitedPoints} from "../tools/line.js";
+import {polylineEraser} from "../tools/eraser.js";
 
 let arrayOfVisitedPoints;
 let coordinates = [];
@@ -36,9 +38,10 @@ export function generateCoordinates(e,degrees) {
 
     coordinates = math.round(coordinates);
 
-    clearVisitedPoints();
+    polylineEraser(e,arrayOfVisitedPoints);
+
     draw(e,coordinates);
-};
+}
 
 export function draw(e,array){
 
