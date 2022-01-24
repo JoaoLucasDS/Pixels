@@ -60,7 +60,7 @@ function findBitDif(arrayA, arrayB) {
     return false;
 }
 
-export function lineCrop(e){
+export function lineClip(e){
     if (count == 0) {
         firstPoint = board.floorMousePos(board.canvas,e);
         thirdPoint = board.floorMousePos(board.canvas,e);
@@ -120,7 +120,10 @@ export function lineCrop(e){
         else if (auxCount == 1){
             auxSecondPoint = board.floorMousePos(board.canvas,e);
             deletePixel(auxFirstPoint.x, auxFirstPoint.y);
-            csClip(auxFirstPoint, auxSecondPoint);
+            let points = csClip(auxFirstPoint, auxSecondPoint);
+            if (points){
+                BresenhamSquare(points[0], points[1]);
+            }
 
             auxCount = 0;
             return;
@@ -130,7 +133,8 @@ export function lineCrop(e){
 
 }
 
-function csClip(pointA, pointB){
+export function csClip(pointA, pointB){
+    console.log(xMin, xMax, yMin, yMax)
     let binA = binCode(pointA);
     let binB = binCode(pointB);
     let or = orArray(binA, binB);
@@ -139,12 +143,11 @@ function csClip(pointA, pointB){
 
 
     if (isArrayEqual(or, allFalse)){
-        BresenhamSquare(pointA, pointB);
-        return;
+        return [pointA, pointB];
     }
 
     else if(isArrayDifferent(and, allFalse)){
-        return;
+        return false;
     }
 
     else{
@@ -156,10 +159,10 @@ function csClip(pointA, pointB){
             pixel(intersectionPoint[0], intersectionPoint[1]);
         }
         if (binA[difBit - 1] === false){
-            csClip(pointA, intersectionPoint);
+            return csClip(pointA, intersectionPoint);
         }
         else {
-            csClip(intersectionPoint, pointB);
+            return csClip(intersectionPoint, pointB);
         }
     }
 }
@@ -208,6 +211,13 @@ function findBorderline(diffBit) {
             [xMin, yMax]
         ];
     }
+}
+
+export function changeBorder(xMinA, xMaxA, yMinA, yMaxA){
+    xMin = xMinA;
+    xMax = xMaxA;
+    yMin = yMinA;
+    yMax = yMaxA;
 }
 
 
