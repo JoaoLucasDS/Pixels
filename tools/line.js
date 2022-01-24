@@ -70,6 +70,28 @@ export function BresenhamOpt(startPoint, endPoint){
     }
 }
 
+export function BresenhamSquare(startPoint,endPoint){
+
+    let dx = Math.abs(endPoint.x - startPoint.x);
+    let dy = Math.abs(endPoint.y - startPoint.y);
+    let sx = (startPoint.x < endPoint.x ) ? 1 : -1;
+    let sy = (startPoint.y < endPoint.y ) ? 1 : -1;
+    let error = dx - dy;
+    let x = startPoint.x;
+    let y = startPoint.y;
+
+
+    while(true) {
+
+        pixel(x,y);
+
+        if ((x === endPoint.x ) && (y === endPoint.y)) break;
+        let e2 = 2*error;
+        if (e2 > -dy) { error -= dy; x += sx; }
+        if (e2 < dx) { error += dx; y += sy; }
+    }
+}
+
 export function drawLine(e) {
     if (count == 0) {
         firstPoint = board.floorMousePos(board.canvas,e);

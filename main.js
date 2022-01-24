@@ -6,6 +6,7 @@ import {drawPixel,drawPen} from "./tools/pixel.js";
 import {eraser} from "./tools/eraser.js";
 import {floodFill} from "./tools/floodFill.js";
 import {scanLine} from "./tools/scanLine.js";
+import {lineCrop} from "./tools/lineCrop.js";
 import {drawCurve} from "./tools/curve.js";
 import {generateCoordinates} from "./transformations/rotation.js";
 import {moveRightPolygon,moveLeftPolygon,moveDownPolygon,moveUpPolygon} from "./transformations/translation.js";
@@ -65,6 +66,10 @@ function handleFunction(e){
     if (selectedTool == 'ScanLine') {
         pressing = false;
         scanLine();
+    }
+    if (selectedTool == 'LineCrop') {
+        pressing = false;
+        lineCrop(e);
     }
     if (selectedTool == 'Rotation') {
         if (visitedPoints.length==numberOfPoints){
