@@ -93,38 +93,44 @@ button:active {
     border: 0px #000;
 }
 
-.zoom{
-
-}
-
 .zoomText{
     padding: 10px;
 }
 .zoomIn{
-    padding-left: 2px;
+    padding-left: 10px;
 }
 .zoomOut{
-    padding-right: 2px;
+    padding-right: 10px;
 }
 
 .pointsText{
     padding: 10px;
 }
 .pointsMinus{
-    padding-left: 5px;
+    padding-right: 10px;
 }
 .pointsPlus{
-    padding-right: 5px;
+    padding-left: 10px;
 }
 
-.transformText{
-    padding: 5px;
+.rotationText{
+    padding: 10px;
 }
-.transformMinus{
+.rotationMinus{
+    padding-right: 5px;
+}
+.rotationPlus{
     padding-left: 5px;
 }
-.transformPlus{
-    padding-right: 5px;
+
+.scaleText{
+    padding: 10px;
+}
+.scaleMinus{
+    padding-right: 10px;
+}
+.scalePlus{
+    padding-left: 10px;
 }
 
 .selector{

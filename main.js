@@ -9,11 +9,13 @@ import {scanLine} from "./tools/scanLine.js";
 import {drawCurve} from "./tools/curve.js";
 import {generateCoordinates} from "./transformations/rotation.js";
 import {moveRightPolygon,moveLeftPolygon,moveDownPolygon,moveUpPolygon} from "./transformations/translation.js";
+import {scale} from "./transformations/scale.js";
 
 const clearBtn = document.querySelector(".clear")
 const zoomBtn = document.querySelector(".zoom")
 const pointsBtn = document.querySelector(".points")
-const transformBtn = document.querySelector(".transformNumber")
+const rotationBtn = document.querySelector(".rotationNumber")
+const scaleBtn = document.querySelector(".scaleNumber")
 const colorBtn = document.querySelector(".color")
 const selectedTranslation = document.querySelector(".selectedTranslation")
 export const colorPicker = document.querySelector('.colorPicker')
@@ -25,8 +27,9 @@ const ctx = canvas.getContext("2d");
 
 
 export let size = 10;
+export let scaleValue = 2;
 export let numberOfPoints = 3;
-export let transformValue = 10;
+export let rotationDegrees = 10;
 
 let translationOptions = ['Up','Down','Left','Right'];
 
@@ -61,31 +64,33 @@ function handleFunction(e){
     }
     if (selectedTool == 'ScanLine') {
         pressing = false;
-        console.log('Passou')
         scanLine();
     }
     if (selectedTool == 'Rotation') {
-        //pressing = false;
         if (visitedPoints.length==numberOfPoints){
-            generateCoordinates(e,transformValue);
+            generateCoordinates(e,rotationDegrees);
         }
-        //drawProjection(e);
     }
     if (selectedTool == 'Translation') {
-        console.log('AQUI')
         if(selectedTranslation.innerHTML == 'Up'){
-            moveUpPolygon(e,transformValue);
+            moveUpPolygon(e,rotationDegrees);
         }
         if(selectedTranslation.innerHTML == 'Down'){
-            moveDownPolygon(e,transformValue);
+            moveDownPolygon(e,rotationDegrees);
         }
         if(selectedTranslation.innerHTML == 'Left'){
-            moveLeftPolygon(e,transformValue);
+            moveLeftPolygon(e,rotationDegrees);
         }
         if(selectedTranslation.innerHTML == 'Right'){
-            moveRightPolygon(e,transformValue);
+            moveRightPolygon(e,rotationDegrees);
         }
     }
+    if (selectedTool == 'Scale') {
+        if (visitedPoints.length==numberOfPoints){
+            scale(e,scaleValue);
+        }
+    }
+
 
 }
 
@@ -95,7 +100,8 @@ window.addEventListener('load',() => {
 
     zoomBtn.children[1].innerHTML=size;
     pointsBtn.children[1].innerHTML=numberOfPoints;
-    transformBtn.children[1].innerHTML=transformValue;
+    scaleBtn.children[1].innerHTML=scaleValue;
+    rotationBtn.children[1].innerHTML=rotationDegrees;
     selectedTranslation.innerHTML=translationOptions[index];
     board.boardRes(size);
 
@@ -211,26 +217,47 @@ window.addEventListener('load',() => {
         }
     })
 
-    transformBtn.children[1].addEventListener('click', function(){
-        transformValue = 10;
+    scaleBtn.children[1].addEventListener('click', function(){
+        scaleValue = 2;
 
-        transformBtn.children[1].innerHTML=numberOfPoints;
+        scaleBtn.children[1].innerHTML=scaleValue;
     })
 
-    transformBtn.children[0].addEventListener("click", function () {
-        if ((transformValue)>20){
-            transformValue -= 10;
-
-            transformBtn.children[1].innerHTML=transformValue;
+    scaleBtn.children[0].addEventListener("click", function () {
+        if ((scaleValue)>2){
+            scaleValue -= 1;
+            scaleBtn.children[1].innerHTML=scaleValue;
         }
 
     })
 
-    transformBtn.children[2].addEventListener("click", function () {
-        if ((transformValue)<360){
-            transformValue += 10;
+    scaleBtn.children[2].addEventListener("click", function () {
+        if ((scaleValue)<5){
+            scaleValue += 1;
+            scaleBtn.children[1].innerHTML=scaleValue;
+        }
+    })
 
-            transformBtn.children[1].innerHTML=transformValue;
+    rotationBtn.children[1].addEventListener('click', function(){
+        rotationDegrees = 10;
+
+        rotationBtn.children[1].innerHTML=numberOfPoints;
+    })
+
+    rotationBtn.children[0].addEventListener("click", function () {
+        if ((rotationDegrees)>=10){
+            rotationDegrees -= 10;
+
+            rotationBtn.children[1].innerHTML=rotationDegrees;
+        }
+
+    })
+
+    rotationBtn.children[2].addEventListener("click", function () {
+        if ((rotationDegrees)<360){
+            rotationDegrees += 10;
+
+            rotationBtn.children[1].innerHTML=rotationDegrees;
         }
     })
 

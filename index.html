@@ -34,9 +34,9 @@
             </div>
 
             <button class="points">
-                <span class="pointsMinus"><i class="fa fa-minus-circle"></i></span>
+                <span class="pointsMinus"><i class="fas fa-chevron-left"></i></span>
                 <span class="pointsText">n Points</span>
-                <span class="pointsPlus"><i class="fa fa-plus-circle"></i></span>
+                <span class="pointsPlus"><i class="fas fa-chevron-right"></i></span>
             </button>
         </div>
 
@@ -48,23 +48,37 @@
             </div>
 
             <button class="zoom">
-                <span class="zoomOut"><i class="fa fa-minus-circle"></i></span>
+                <span class="zoomOut"><i class="fas fa-chevron-left"></i></span>
                 <span class="zoomText">Zoom</span>
-                <span class="zoomIn"><i class="fa fa-plus-circle"></i></span>
+                <span class="zoomIn"><i class="fas fa-chevron-right"></i></span>
             </button>
         </div>
 
         <div class="option">
             <div class="text">
                 <strong>
-                    Transformation Value
+                    Rotation Degrees
                 </strong>
             </div>
 
-            <button class="transformNumber">
-                <span class="transformMinus"><i class="fa fa-minus-circle"></i></span>
-                <span class="transformText">N</span>
-                <span class="transformPlus"><i class="fa fa-plus-circle"></i></span>
+            <button class="rotationNumber">
+                <span class="rotationMinus"><i class="fas fa-chevron-left"></i></span>
+                <span class="rotationText">N rotation</span>
+                <span class="rotationPlus"><i class="fas fa-chevron-right"></i></span>
+            </button>
+        </div>
+
+        <div class="option">
+            <div class="text">
+                <strong>
+                    Scale/Move value
+                </strong>
+            </div>
+
+            <button class="scaleNumber">
+                <span class="scaleMinus"><i class="fas fa-chevron-left"></i></span>
+                <span class="scaleText">N scale</span>
+                <span class="scalePlus"><i class="fas fa-chevron-right"></i></span>
             </button>
         </div>
 
@@ -119,6 +133,8 @@
             <input type="radio" name="tools" value="Rotation" class="checkmark">Rotation</label>
         <label class="radioContainer">
             <input type="radio" name="tools" value="Translation" class="checkmark">Translation</label>
+        <label class="radioContainer">
+            <input type="radio" name="tools" value="Scale" class="checkmark">Scale</label>
     </div>
 
     <canvas id = "canvas"></canvas>
