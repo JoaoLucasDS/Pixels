@@ -104,42 +104,81 @@
                 <span class="colorPickerSpan" id="colorPickerSpan" ><input type="color" value="#555555" id="colorPicker" class="colorPicker"></span>
             </button>
         </div>
-
     </div>
 
-    <div class="selector">
-        <label class="radioContainer">
-            <input type="radio" name="tools" value="Pixel" class="checkmark">Pixel</label>
-        <label class="radioContainer">
-            <input type="radio" name="tools" value="Line" class="checkmark" checked>Line</label>
-        <label class="radioContainer">
-            <input type="radio" name="tools" value="Curve" class="checkmark">Curve</label>
-        <label class="radioContainer">
-            <input type="radio" name="tools" value="Circle" class="checkmark">Circle</label>
-        <label class="radioContainer">
-            <input type="radio" name="tools" value="Pen" class="checkmark">Pen</label>
-        <label class="radioContainer">
-            <input type="radio" name="tools" value="FloodFill" class="checkmark">FloodFill</label>
+    <div class="row">
+        <div class="colum">
+            <div class="selector">
+                <strong>Simple Tools</strong>
+                <div class = "radio">
+                    <label class="radioContainer">
+                        <input type="radio" name="tools" value="Pixel" class="checkmark">Pixel</label>
+                </div>
+                <div class = "radio">
+                    <label class="radioContainer">
+                        <input type="radio" name="tools" value="Line" class="checkmark" checked>Line</label>
+                </div>
+                <div class = "radio">
+                    <label class="radioContainer">
+                        <input type="radio" name="tools" value="LineCrop" class="checkmark">LineCrop</label>
+                </div>
+                <div class = "radio">
+                    <label class="radioContainer">
+                        <input type="radio" name="tools" value="Curve" class="checkmark">Curve</label>
+                </div>
+                <div class = "radio">
+                    <label class="radioContainer">
+                        <input type="radio" name="tools" value="Circle" class="checkmark">Circle</label>
+                </div>
+                <div class = "radio">
+                    <label class="radioContainer">
+                        <input type="radio" name="tools" value="Pen" class="checkmark">Pen</label>
+                </div>
+                <div class = "radio">
+                    <label class="radioContainer">
+                        <input type="radio" name="tools" value="FloodFill" class="checkmark">FloodFill</label>
+                </div>
+                <div class = "radio">
+                    <label class="radioContainer">
+                        <input type="radio" name="tools" value="Eraser" class="checkmark">Eraser</label>
+                </div>
+            </div>
 
-        <label class="radioContainer">
-            <input type="radio" name="tools" value="Eraser" class="checkmark">Eraser</label>
-    </div>
-    <div class="selector">
-        <label class="radioContainer">
-            <input type="radio" name="tools" value="Polyline" class="checkmark">Polyline</label>
-        <label class="radioContainer">
-            <input type="radio" name="tools" value="ScanLine" class="checkmark">ScanLine</label>
-        <label class="radioContainer">
-            <input type="radio" name="tools" value="LineCrop" class="checkmark">LineCrop</label>
-        <label class="radioContainer">
-            <input type="radio" name="tools" value="Rotation" class="checkmark">Rotation</label>
-        <label class="radioContainer">
-            <input type="radio" name="tools" value="Translation" class="checkmark">Translation</label>
-        <label class="radioContainer">
-            <input type="radio" name="tools" value="Scale" class="checkmark">Scale</label>
+            <div class="selector">
+                <strong>Polygon Tools</strong>
+                <div class = "radio">
+                    <label class="radioContainer">
+                        <input type="radio" name="tools" value="Polyline" class="checkmark">Polyline</label>
+                </div>
+                <div class = "radio">
+                    <label class="radioContainer">
+                        <input type="radio" name="tools" value="ScanLine" class="checkmark">ScanLine</label>
+                </div>
+                <div class = "radio">
+                    <label class="radioContainer">
+                        <input type="radio" name="tools" value="Rotation" class="checkmark">Rotation</label>
+                </div>
+                <div class = "radio">
+                    <label class="radioContainer">
+                        <input type="radio" name="tools" value="Translation" class="checkmark">Translation</label>
+                </div>
+                <div class = "radio">
+                    <label class="radioContainer">
+                        <input type="radio" name="tools" value="Scale" class="checkmark">Scale</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="colum">
+            <canvas id = "canvas"></canvas>
+        </div>
+
+        <div class="colum">
+            <div class="selector">
+            </div>
+        </div>
     </div>
 
-    <canvas id = "canvas"></canvas>
     <script type= "module" src = "main.js"></script>
     </body>
 </html>

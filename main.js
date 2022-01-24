@@ -110,6 +110,8 @@ window.addEventListener('load',() => {
     selectedTranslation.innerHTML=translationOptions[index];
     board.boardRes(size);
 
+    document.querySelector('input[type=radio]:checked').parentElement.style.backgroundColor = 'antiquewhite';
+
 
     colorBtn.addEventListener('click', function(){
         colorPicker.focus();
@@ -124,13 +126,28 @@ window.addEventListener('load',() => {
     radios.forEach(radio => {
         radio.addEventListener('click', function() {
             if (this.checked) {
+                //document.querySelector('input[type=radio]:checked').parentElement.style.backgroundColor = 'black';
+
+                //console.log(this.parentElement.style.backgroundColor);
+                //this.parentElement.style.backgroundColor = 'black';
                 selectedTool = this.value;
             } else {
                 selectedTool = this.value;
             }
+            //document.querySelector('input[type=radio]:not(:checked)').parentElement.style.backgroundColor = 'white';
         });
     });
+    let prev = document.querySelector('input[type=radio]:checked');
 
+    radios.forEach(radio => {
+        radio.addEventListener('click', function() {
+            (prev) ? prev.parentElement.style.backgroundColor = 'white': null;
+            if (this !== prev) {
+                prev = this;
+            }
+            document.querySelector('input[type=radio]:checked').parentElement.style.backgroundColor = 'antiquewhite';
+        });
+    });
 
     board.canvas.addEventListener("mousedown", handleFunction);
     board.canvas.addEventListener("mouseup", function stop(e) {
