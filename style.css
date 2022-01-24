@@ -176,6 +176,8 @@ input[type="radio"] {
 }
 
 #canvas{
+    width: 100%;     height: 80vh;
+
     border: 2px solid #b6b6b6;
     weight: 1280px;
     height: 720px;
